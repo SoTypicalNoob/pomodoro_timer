@@ -19,8 +19,7 @@ def pomodoro_cycle():
     breaks = 0
     while True:
         if current_time < pomodoro_work_end:
-            print('Remainging time: {}'.format(pomodoro_work_end - current_time), end='\r')
-            # print("Remaining time: ", pomodoro_work_end - current_time)
+            print('Remainging time: {}'.format(pomodoro_work_end - current_time), end='\r')            
         elif pomodoro_work_end <= current_time <= pomodoro_cycle_end:
             print("in break")
             if breaks == 0:
