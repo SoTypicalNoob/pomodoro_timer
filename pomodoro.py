@@ -19,7 +19,8 @@ def pomodoro_cycle():
     breaks = 0
     while True:
         if current_time < pomodoro_work_end:
-            print("Remaining time: ", pomodoro_work_end - current_time)
+            print('Remainging time: {}'.format(pomodoro_work_end - current_time), end='\r')
+            # print("Remaining time: ", pomodoro_work_end - current_time)
         elif pomodoro_work_end <= current_time <= pomodoro_cycle_end:
             print("in break")
             if breaks == 0:
@@ -42,7 +43,7 @@ def pomodoro_cycle():
             current_time = dt.datetime.now()
             pomodoro_work_end = current_time + dt.timedelta(0, pomodoro_work)
             pomodoro_cycle_end = current_time + dt.timedelta(0, pomodoro_work + pomodoro_rest)
-        time.sleep(20)
+        time.sleep(1)
         current_time = dt.datetime.now()
 
 def main():
