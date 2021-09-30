@@ -15,28 +15,48 @@ def pomodoro_cycle():
     pomodoro_rest = 5 * 60
     pomodoro_cycle_end = current_time + dt.timedelta(0,pomodoro_work + pomodoro_rest)
 
+
+    format_a = "%H:%M:%S.%f"
+    format_b = "%H:%M:%S"
     total_pomodoros = 0
     breaks = 0
+
+
     while True:
         if current_time < pomodoro_work_end:
-            print('Remainging time: {}'.format(pomodoro_work_end - current_time), end='\r')            
+            try:
+                print('Remainging time: {}'.format(
+                    dt.datetime.strptime(str(pomodoro_work_end - current_time)
+                    ,format_a).strftime("%M:%S")
+                    ), end='\r')
+            except ValueError:
+                print('Remainging time: {}'.format(
+                    dt.datetime.strptime(str(pomodoro_work_end - current_time)
+                    ,format_b).strftime("%M:%S")
+                    ), end='\r')
         elif pomodoro_work_end <= current_time <= pomodoro_cycle_end:
-            print("in break")
             if breaks == 0:
-                # if total_pomodoros == 3:
-                #     break
-                print("if break")
-                time.sleep(10)
-                for i in range(10):
-                    winsound.Beep((i + 400), 700)
-                print("Break time!")
+                for i in range(3):
+                    winsound.Beep((i + 500), 700)
+                    time.sleep(1)
+                print("\nBreak time!")
                 winpath = os.environ["windir"]
                 os.system(winpath + r'\system32\rundll32 user32.dll, LockWorkStation')
                 breaks += 1
+            try:
+                print('Remainging time: {}'.format(
+                    dt.datetime.strptime(str(pomodoro_cycle_end - current_time)
+                    ,format_a).strftime("%M:%S")
+                    ), end='\r')
+            except ValueError:
+                print('Remainging time: {}'.format(
+                    dt.datetime.strptime(str(pomodoro_cycle_end - current_time)
+                    ,format_b).strftime("%M:%S")
+                    ), end='\r')
         else:
             breaks = 0
             total_pomodoros += 1
-            print("Finished pomodoros: ", total_pomodoros)
+            print("\nFinished pomodoros: ", total_pomodoros)
             for i in range(10):
                 winsound.Beep((i + 100), 500)
             current_time = dt.datetime.now()
